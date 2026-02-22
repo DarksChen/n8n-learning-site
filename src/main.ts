@@ -57,7 +57,7 @@ const LEVEL_0: Section = {
       title: 'Portaly 購買教學：如何購買商品與找回已購買的商品',
       description: '第一次使用 Portaly 購買超級個體包？這支影片教你如何完成購買流程，以及未來如何找回你已經購買過的商品與下載檔案。',
       links: [
-        { label: '📺 購買教學影片', url: 'https://youtu.be/L3x21UezXZY', type: 'video' },
+        { label: '📺 觀看影片教學', url: 'https://youtu.be/L3x21UezXZY', type: 'video' },
       ],
     },
     {
@@ -96,8 +96,8 @@ const LEVEL_0: Section = {
     },
     {
       id: 'n8n-style',
-      title: '🎨 n8n 介面美化小工具',
-      description: '你在教學影片裡看到的彩色連線，是因為裝了這個免費的 Chrome 外掛！想讓你的 n8n 編輯器更好看、更好辨識的話，可以去安裝。',
+      title: '🎨 n8n 介面美化小工具（非必要安裝）',
+      description: '⚠️ 如果你發現教學影片裡的 n8n 連線顏色跟你的不一樣，不用緊張！那是因為我裝了這個 Chrome 外掛。它只是美化用的，完全不影響功能，不裝也沒任何問題。',
       links: [
         { label: '✨ Chrome 外掛下載', url: 'https://lifecheatslab.com/style', type: 'tool' },
         { label: '📺 展示影片', url: 'https://youtu.be/Zh10_3DjQj8', type: 'video' },

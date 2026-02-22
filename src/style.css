@@ -1127,12 +1127,12 @@ a:hover {
 }
 
 .cta-btn.primary {
-  background: var(--accent-color);
+  background: var(--accent);
   color: #fff;
 }
 
 .cta-btn.primary:hover {
-  background: var(--accent-hover);
+  background: #5b4bd5;
   transform: translateY(-1px);
 }
 
