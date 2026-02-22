@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://darkschen.github.io/n8n-learning-site/sitemap.xml
