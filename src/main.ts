@@ -173,7 +173,7 @@ const LEVEL_1: Section = {
           ],
         },
         {
-          title: '🟡 選配功能',
+          title: '🟡 圖庫和通知',
           required: false,
           links: [
             { label: 'Cloudinary API', url: 'https://lifecheatslab.com/n8n-cloudinary-api/', type: 'article' },
@@ -304,13 +304,7 @@ const LEVEL_2: Section = {
           required: true,
           links: [
             { label: 'Google Drive API', url: 'https://lifecheatslab.com/n8n-google-api/', type: 'article' },
-          ],
-        },
-        {
-          title: '🟡 影片內教學',
-          required: false,
-          links: [
-            { label: 'n8n API（教學在影片內）', url: 'https://youtu.be/GlT7NldtPEE', type: 'video' },
+            { label: 'n8n API (教學在影片內)', url: 'https://youtu.be/GlT7NldtPEE', type: 'video' },
           ],
         },
       ],
@@ -620,7 +614,7 @@ function renderMainContent(): void {
         超級個體包收錄的實戰版本講求<strong>開箱即用</strong>，讓創業者和一人公司可以馬上使用，提升生產力、節省時間。
       </div>
       <div class="info-links">
-        <a class="info-link purchase" href="https://portaly.cc/darks/product/f3aCNj157SjzGLcr4uAl" target="_blank" rel="noopener">🛒 購買超級個體包</a>
+        <a class="info-link purchase" href="https://lifecheatslab.com/Supern8n" target="_blank" rel="noopener">🛒 購買超級個體包</a>
         <a class="info-link" href="https://www.facebook.com/chenshaoyun0603/" target="_blank" rel="noopener">📘 Facebook</a>
         <a class="info-link" href="https://www.threads.com/@darks0603" target="_blank" rel="noopener">🧵 Threads</a>
         <a class="info-link" href="https://www.youtube.com/@darkschen" target="_blank" rel="noopener">▶️ YouTube</a>
@@ -780,7 +774,7 @@ function renderMainContent(): void {
         <h3>🙋 自學有困難？加入專屬社群一起討論</h3>
         <p>學習過程中遇到問題，可以加入我們的 n8n 實戰營專屬群組，裡面有 400+ 位學員和熱心助理可以幫忙解答。</p>
         <div class="cta-actions">
-          <a class="cta-btn primary" href="https://portaly.cc/darks/product/f3aCNj157SjzGLcr4uAl" target="_blank" rel="noopener">🛒 還沒購買？前往購買超級個體包</a>
+          <a class="cta-btn primary" href="https://lifecheatslab.com/Supern8n" target="_blank" rel="noopener">🛒 還沒購買？前往購買超級個體包</a>
           <a class="cta-btn secondary" href="https://youtu.be/9kEOO1ouTtU" target="_blank" rel="noopener">📺 已購買？看影片了解如何加入群組</a>
         </div>
       </div>
