@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>n8n 超級個體包 — 新手實戰學習站</title>
+  <meta name="description" content="專為創業者與一人公司打造的 n8n 自動化模板學習站。免費學習、真實模板、從零開始一步步帶你踏入 AI 自動化。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <!-- Mobile Nav Toggle -->
+  <button id="mobile-nav-toggle" aria-label="開啟選單">☰</button>
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="sidebar-header">
+      <span class="logo">🚀</span>
+      <h1>超級個體包</h1>
+      <p class="subtitle">n8n 新手實戰學習站</p>
+    </div>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle-container">
+      <button id="theme-toggle" aria-label="切換主題">
+        <span class="theme-icon" id="theme-icon">🌙</span>
+        <span class="theme-label" id="theme-label">深色模式</span>
+      </button>
+    </div>
+
+    <!-- Learning Timer -->
+    <div class="learning-timer" id="learning-timer">
+      <div class="timer-label">📖 累計學習時間</div>
+      <div class="timer-display" id="timer-display">00:00:00</div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-summary" id="progress-summary">
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <span class="progress-text" id="progress-text">0 / 0 已完成</span>
+    </div>
+
+    <nav id="sidebar-nav"></nav>
+
+    <div class="sidebar-footer">
+      <a href="https://www.facebook.com/chenshaoyun0603/" target="_blank" rel="noopener">陳盟升 Darks</a>
+      <span class="footer-sep">·</span>
+      <a href="https://lifecheatslab.com/" target="_blank" rel="noopener">人生攻略研究所</a>
+    </div>
+  </aside>
+
+  <!-- Overlay for mobile -->
+  <div id="sidebar-overlay"></div>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <div id="app"></div>
+  </main>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
