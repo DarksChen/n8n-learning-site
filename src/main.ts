@@ -100,6 +100,7 @@ const LEVEL_0: Section = {
       description: '你在教學影片裡看到的彩色連線，是因為裝了這個免費的 Chrome 外掛！想讓你的 n8n 編輯器更好看、更好辨識的話，可以去安裝。',
       links: [
         { label: '✨ Chrome 外掛下載', url: 'https://lifecheatslab.com/style', type: 'tool' },
+        { label: '📺 展示影片', url: 'https://youtu.be/Zh10_3DjQj8', type: 'video' },
       ],
     },
   ],
@@ -769,6 +770,42 @@ function renderMainContent(): void {
       html += `</div>`;
     }
   }
+
+  // ========== Footer CTA Sections ==========
+  html += `
+    <hr class="section-divider" />
+    <div class="footer-cta-area">
+
+      <div class="cta-card community">
+        <h3>🙋 自學有困難？加入專屬社群一起討論</h3>
+        <p>學習過程中遇到問題，可以加入我們的 n8n 實戰營專屬群組，裡面有 400+ 位學員和熱心助理可以幫忙解答。</p>
+        <div class="cta-actions">
+          <a class="cta-btn primary" href="https://portaly.cc/darks/product/f3aCNj157SjzGLcr4uAl" target="_blank" rel="noopener">🛒 還沒購買？前往購買超級個體包</a>
+          <a class="cta-btn secondary" href="https://youtu.be/9kEOO1ouTtU" target="_blank" rel="noopener">📺 已購買？看影片了解如何加入群組</a>
+        </div>
+      </div>
+
+      <div class="cta-card newsletter">
+        <h3>📨 訂閱電子報，掌握最新動態</h3>
+        <p>訂閱後只在有新商品、新服務、新課程時才會寄信通知，平常不會寄信打擾你。</p>
+        <a class="cta-btn primary" href="https://lifecheatslab.com/follow" target="_blank" rel="noopener">✉️ 訂閱電子報</a>
+      </div>
+
+      <div class="cta-card open-source">
+        <h3>📢 本網站為開源專案</h3>
+        <p>這個學習站的源碼完全公開在 GitHub，採用 MIT 授權。你可以自由取用、修改、做成自己的學習站或個人網站。商用也沒問題！</p>
+        <p>如果你喜歡這個專案，歡迎到 GitHub 給我一個 ⭐ Star，對我來說是很大的鼓勵！</p>
+        <a class="cta-btn primary" href="https://github.com/DarksChen/n8n-learning-site" target="_blank" rel="noopener">⭐ 前往 GitHub 給個 Star</a>
+      </div>
+
+      <div class="cta-card consulting">
+        <h3>💼 委託開發・顧問諮詢・企業導入</h3>
+        <p>如果你需要客製化的 n8n 工作流開發、一對一技術顧問，或想為企業導入 AI 自動化，歡迎前往我的個人頁面了解更多。</p>
+        <a class="cta-btn primary" href="https://lifecheatslab.com/darks" target="_blank" rel="noopener">👉 前往了解更多</a>
+      </div>
+
+    </div>
+  `;
 
   app.innerHTML = html;
 
