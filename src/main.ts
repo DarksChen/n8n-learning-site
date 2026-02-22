@@ -359,7 +359,7 @@ function saveProgress(completed: Set<string>): void {
 // ============================================
 
 function loadTheme(): string {
-  return localStorage.getItem(STORAGE_THEME) || 'dark';
+  return localStorage.getItem(STORAGE_THEME) || 'light';
 }
 
 function applyTheme(theme: string): void {
@@ -619,6 +619,7 @@ function renderMainContent(): void {
       </div>
       <div class="info-links">
         <a class="info-link purchase" href="https://portaly.cc/darks/product/f3aCNj157SjzGLcr4uAl" target="_blank" rel="noopener">🛒 購買超級個體包</a>
+        <a class="info-link" href="https://www.youtube.com/@darkschen" target="_blank" rel="noopener">▶️ YouTube</a>
         <a class="info-link" href="https://www.facebook.com/chenshaoyun0603/" target="_blank" rel="noopener">📘 Facebook</a>
         <a class="info-link" href="https://www.threads.com/@darks0603" target="_blank" rel="noopener">🧵 Threads</a>
         <a class="info-link" href="https://portaly.cc/darks" target="_blank" rel="noopener">🏪 Portaly 模板商城</a>
