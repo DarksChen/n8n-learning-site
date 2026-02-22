@@ -119,9 +119,9 @@ git push
 | 平台 | 連結 |
 |------|------|
 | 🌐 官網 | [人生攻略研究所](https://lifecheatslab.com/) |
-| ▶️ YouTube | [@darkschen](https://www.youtube.com/@darkschen) |
 | 📘 Facebook | [陳盟升](https://www.facebook.com/chenshaoyun0603/) |
 | 🧵 Threads | [@darks0603](https://www.threads.com/@darks0603) |
+| ▶️ YouTube | [@darkschen](https://www.youtube.com/@darkschen) |
 | 🏪 模板商城 | [Portaly](https://portaly.cc/darks) |
 
 ---
