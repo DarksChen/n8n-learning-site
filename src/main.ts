@@ -491,9 +491,10 @@ function renderSidebarNav(): void {
         </div>`;
     }
     if (section.id === 'level-2') {
-      for (const res of LEVEL_2_RESOURCES) {
+      for (let i = 0; i < LEVEL_2_RESOURCES.length; i++) {
+        const res = LEVEL_2_RESOURCES[i];
         html += `
-          <div class="nav-item" data-section="level-2" data-task-id="">
+          <div class="nav-item" data-scroll-to="level2-res-${i}">
             <span class="nav-check" style="border:none;">${res.icon}</span>
             <span>${res.title}</span>
           </div>`;
@@ -515,7 +516,7 @@ function renderSidebarNav(): void {
       } else if (sectionId) {
         target = document.getElementById(sectionId);
       }
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       document.getElementById('sidebar')?.classList.remove('open');
       document.getElementById('sidebar-overlay')?.classList.remove('open');
     });
@@ -619,9 +620,9 @@ function renderMainContent(): void {
       </div>
       <div class="info-links">
         <a class="info-link purchase" href="https://portaly.cc/darks/product/f3aCNj157SjzGLcr4uAl" target="_blank" rel="noopener">🛒 購買超級個體包</a>
-        <a class="info-link" href="https://www.youtube.com/@darkschen" target="_blank" rel="noopener">▶️ YouTube</a>
         <a class="info-link" href="https://www.facebook.com/chenshaoyun0603/" target="_blank" rel="noopener">📘 Facebook</a>
         <a class="info-link" href="https://www.threads.com/@darks0603" target="_blank" rel="noopener">🧵 Threads</a>
+        <a class="info-link" href="https://www.youtube.com/@darkschen" target="_blank" rel="noopener">▶️ YouTube</a>
         <a class="info-link" href="https://portaly.cc/darks" target="_blank" rel="noopener">🏪 Portaly 模板商城</a>
       </div>
     </div>
@@ -754,9 +755,10 @@ function renderMainContent(): void {
     // Level 2 Resources
     if (section.id === 'level-2') {
       html += `<div class="resource-card-list">`;
-      for (const res of LEVEL_2_RESOURCES) {
+      for (let i = 0; i < LEVEL_2_RESOURCES.length; i++) {
+        const res = LEVEL_2_RESOURCES[i];
         html += `
-          <a class="resource-card" href="${res.url}" target="_blank" rel="noopener">
+          <a class="resource-card" id="level2-res-${i}" href="${res.url}" target="_blank" rel="noopener">
             <span class="rc-icon">${res.icon}</span>
             <div class="rc-info">
               <h4>${res.title}</h4>
