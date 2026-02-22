@@ -91,13 +91,13 @@ const LEVEL_0: Section = {
       title: '如何除錯，以及如何截圖發問',
       description: '遇到問題時，如何正確截圖、如何描述問題、如何在社群裡有效發問，讓教學助教和其他學員能快速幫到你。學會除錯是玩 n8n 最重要的技能之一。',
       links: [
-        { label: '📺 除錯教學影片 (即將上線)', url: '', type: 'video' },
+        { label: '📺 觀看影片教學', url: 'https://youtu.be/YxZOALvdssc', type: 'video' },
       ],
     },
     {
       id: 'n8n-style',
       title: '🎨 n8n 介面美化小工具（非必要安裝）',
-      description: '⚠️ 如果你發現教學影片裡的 n8n 連線顏色跟你的不一樣，不用緊張！那是因為我裝了這個 Chrome 外掛。它只是美化用的，完全不影響功能，不裝也沒任何問題。',
+      description: '⚠️ 如果你發現教學影片裡的 n8n 連線顏色跟你的不一樣，不用緊張！那是因為我裝了這個我自己開發的免費 Chrome 外掛。它只是美化用的，完全不影響功能，不裝也沒任何問題。',
       links: [
         { label: '✨ Chrome 外掛下載', url: 'https://lifecheatslab.com/style', type: 'tool' },
         { label: '📺 展示影片', url: 'https://youtu.be/Zh10_3DjQj8', type: 'video' },
