@@ -74,7 +74,7 @@ const LEVEL_0: Section = {
       title: 'n8n 模板如何使用？從下載檔案、加入社群到匯入工作流程完整教學',
       description: '下載好的 JSON 檔案就是你的工作流模板。這支影片從下載檔案開始，教你如何加入學習社群、匯入工作流到你的 n8n，以及基本的操作方式。',
       links: [
-        { label: '📺 模板使用完整教學', url: 'https://youtu.be/9kEOO1ouTtU', type: 'video' },
+        { label: '📺 模板使用完整教學', url: 'https://youtu.be/3E-gOxn84fA', type: 'video' },
       ],
     },
     {
