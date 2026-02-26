@@ -21,6 +21,7 @@ interface TaskItem {
   title: string;
   subtitle?: string;
   description: string;
+  paidExtra?: string;
   links?: ResourceLink[];
   apiGroups?: ApiGroup[];
 }
@@ -63,7 +64,7 @@ const LEVEL_0: Section = {
     {
       id: 'deploy-n8n',
       title: '使用 Zeabur 部署你的 n8n 伺服器',
-      description: '如果你還沒有自己的 n8n 伺服器，請跟著教學在 Zeabur 上部署一台專屬伺服器。Zeabur 提供免費試用，部署過程只需要幾分鐘。',
+      description: '如果你還沒有自己的 n8n 伺服器，請跟著教學在 Zeabur 上部署 n8n 伺服器。Zeabur 提供免費額度，部署只需幾分鐘。未來熟練了再付費或部署到別處就行。使用我的邀請碼：darkschen0603 能獲得20%購買伺服器、訂閱、AI API 的折扣。',
       links: [
         { label: '📺 部署教學影片', url: 'https://youtu.be/04-s3FDox88', type: 'video' },
         { label: '🎁 Zeabur 邀請碼 (首次付費 +$5 USD)', url: 'https://zeabur.com/referral?referralCode=darkschen0603', type: 'community' },
@@ -79,17 +80,18 @@ const LEVEL_0: Section = {
     },
     {
       id: 'line-error-notify',
-      title: 'n8n 錯誤通知與 LINE 串接全攻略',
-      description: '建立你的安全防護網！設定完成後，當你的任何 n8n 工作流出錯時，系統會自動透過 LINE 通知你。包含 LINE 官方帳號建立、Webhook 串接、社群金鑰 CSV 匯入等完整步驟。',
+      title: 'n8n 通知自己工作流 & 社群金鑰 串接全攻略',
+      description: '從匯入最重要的社群金鑰開始，建立你的安全防護網！設定完成後，當你的任何 n8n 工作流出錯時，系統會自動透過 LINE/Telegram 通知你。也會教你如何找到 LINE 的 ID。',
       links: [
-        { label: '📺 LINE 串接教學影片', url: 'https://youtu.be/Vf5n-efKNS4', type: 'video' },
+        { label: '📺 觀看教學影片', url: 'https://youtu.be/Vf5n-efKNS4', type: 'video' },
         { label: '📄 LINE API 圖文教學', url: 'https://lifecheatslab.com/n8n-line-api/', type: 'article' },
+        { label: '📄 Telegram API 圖文教學', url: 'https://lifecheatslab.com/n8n-telegram-api/', type: 'article' },
       ],
     },
     {
       id: 'learn-debug',
-      title: '如何除錯，以及如何截圖發問',
-      description: '遇到問題時，如何正確截圖、如何描述問題、如何在社群裡有效發問，讓教學助教和其他學員能快速幫到你。學會除錯是玩 n8n 最重要的技能之一。',
+      title: '如何自行除錯、讓 AI 幫忙除錯，以及如何截圖發問',
+      description: '遇到問題時，如何正確截圖、如何描述問題、如何在社群裡有效發問，讓助教和其他學員能快速幫到你。學會除錯是玩 n8n 最重要的技能之一。',
       links: [
         { label: '📺 觀看影片教學', url: 'https://youtu.be/YxZOALvdssc', type: 'video' },
       ],
@@ -114,14 +116,15 @@ const LEVEL_1: Section = {
   id: 'level-1',
   level: 'LEVEL 1',
   title: '五大核心實戰模板',
-  description: '超級個體包的五大核心模板。依難易度與建議優先程度排序，你也可以根據自己的需求，優先做最需要的那一個。',
+  description: '不論你是超級個體包用戶還是免費模板使用者，都可以跟著教學一步步操作。依難易度與建議優先程度排序，你也可以根據自己的需求，優先做最需要的那一個。優先看教學影片，文章僅是輔助用的。',
   icon: '🚀',
   tasks: [
     {
       id: 'ai-knowledge-assistant',
       title: 'AI 知識助手',
       subtitle: '⭐ 最簡單！強烈建議 n8n 新手優先嘗試，你會立刻感受到自動化的強大！',
-      description: '你的私人 AI 研究員。透過 LINE 或 Telegram 傳送網址、圖片、語音、影片，AI 會自動幫你摘要整理並存入 Notion。模板內包含 Notion AI 知識庫模板，務必複製後使用，詳細請見教學影片。',
+      description: '你的私人 AI 研究員。透過 LINE 或 Telegram 傳送網址、圖片、語音、影片，AI 會自動幫你摘要整理並存入 Notion。模板內附 Notion AI 知識庫模板連結，匯入工作流後即可在 n8n 內找到，詳細請見教學影片。',
+      paidExtra: '實戰版特色：多種解析資料源，和最重要的讓 AI 的重點解析更貼合你的目標與需求！',
       links: [
         { label: '📺 影片教學', url: 'https://lifecheatslab.com/summary', type: 'video' },
         { label: '📄 文章教學', url: 'https://lifecheatslab.com/n8n-line-ai-notion/', type: 'article' },
@@ -150,8 +153,9 @@ const LEVEL_1: Section = {
     {
       id: 'news-editor',
       title: '你的專屬新聞編輯室',
-      subtitle: '⭐ 也很簡單！適合跟「一鍵自動發文」串接，做成全自動社群發文',
-      description: '自動從多個新聞來源抓取你感興趣的產業新聞，經 AI 彙整為圖文摘要，每天自動推送到你的 LINE 或 Email。每個人都能用，輕鬆打造個人專屬的資訊流。',
+      subtitle: '⭐ 也很簡單！適合自己動手改造，跟「一鍵自動發文」串接，做成全自動社群發文',
+      description: '每天自動抓取你感興趣的產業新聞，經 AI 彙整為圖文摘要，推送到你的 LINE、Telegram 或 Email。每個人都能用，輕鬆打造個人專屬的資訊流。',
+      paidExtra: '實戰版特色：能生成新聞圖片和錄音，讓你也能做 Podcast，用聽的吸收每日新知！',
       links: [
         { label: '📺 影片教學', url: 'https://lifecheatslab.com/news', type: 'video' },
         { label: '📄 文章教學', url: 'https://lifecheatslab.com/n8n-news-media/', type: 'article' },
@@ -187,7 +191,8 @@ const LEVEL_1: Section = {
       id: 'linkedin-lead-gen',
       title: 'LinkedIn 潛在客戶自動開發',
       subtitle: '不難，建議都用看看，感受一下如何自動獲客與開發',
-      description: '自動化你的 LinkedIn 潛在客戶開發流程。系統會自動搜尋目標客戶、整理客戶資料，並透過 Email 寄出開發信。讓 n8n 幫你找到並追蹤高價值目標客戶。',
+      description: '自動化你的 LinkedIn 潛在客戶開發流程。系統會根據你的需求，協助搜尋目標客戶、整理客戶資料，並透過 Email 寄出開發信(預設放在你的草稿中)。讓 n8n 幫你找到並追蹤高價值目標客戶。',
+      paidExtra: '實戰版特色：AI 幫你尋找符合條件的目標客戶、客製化開發信生成、Google Sheets 名單管理',
       links: [
         { label: '📺 影片教學', url: 'https://youtu.be/ZnZygv6IhjY', type: 'video' },
       ],
@@ -209,7 +214,8 @@ const LEVEL_1: Section = {
       id: 'multi-platform-post',
       title: '一鍵自動發文',
       subtitle: '⚠️ 難度較高，記得看影片操作。若仍然太難可以考慮先做免費模板',
-      description: '寫好一篇文章，一鍵同步發布到 Facebook、Instagram、Threads、X (Twitter)、LinkedIn。模板內包含 Notion 主控台模板，務必複製後使用，詳細請見教學影片。',
+      description: '寫好一篇文章，一鍵同步發布到 Facebook、Instagram、Threads、X (Twitter)、LinkedIn。模板內附 Notion 主控台模板連結，匯入工作流後即可在 n8n 內找到，詳細請見教學影片。',
+      paidExtra: '實戰版特色：排程發布、失敗自動重試、Notion 主控台、多平台狀態追蹤',
       links: [
         { label: '📺 影片教學', url: 'https://youtu.be/f7072xeSCJw', type: 'video' },
         { label: '📄 文章教學', url: 'https://lifecheatslab.com/post', type: 'article' },
@@ -222,7 +228,7 @@ const LEVEL_1: Section = {
             { label: 'Facebook API', url: 'https://lifecheatslab.com/n8n-facebook-api/', type: 'article' },
             { label: 'Instagram API', url: 'https://lifecheatslab.com/n8n-ig-api/', type: 'article' },
             { label: 'Threads API', url: 'https://lifecheatslab.com/n8n-threads-api/', type: 'article' },
-            { label: 'X (Twitter) API', url: 'https://lifecheatslab.com/n8n-x-media-post/', type: 'article' },
+            { label: 'X  API (2026年官方改成收費api，使用需付費給官方)', url: 'https://lifecheatslab.com/n8n-x-media-post/', type: 'article' },
             { label: 'LinkedIn API', url: 'https://lifecheatslab.com/n8n-linkedin-api/', type: 'article' },
           ],
         },
@@ -248,7 +254,8 @@ const LEVEL_1: Section = {
       id: 'wordpress-ai-editor',
       title: 'WordPress 網站 AI 編輯',
       subtitle: '只需要申請數個 API，不難，但你得先有自己的網站（可以用 Zeabur 架）',
-      description: '讓 AI 幫你撰寫與編輯 WordPress 文章，直接從 n8n 發布草稿到你的網站。模板內包含 Notion 主控台模板，務必複製後使用，詳細請見教學影片。',
+      description: '讓 AI 幫你撰寫與發布 WordPress 文章，直接從 n8n 發布草稿到你的網站。模板內附 Notion 主控台模板連結，匯入工作流後即可在 n8n 內找到，詳細請見教學影片。',
+      paidExtra: '實戰版特色：SEO 自動優化、精選圖片生成、Notion 主控台整合',
       links: [
         { label: '📺 影片教學', url: 'https://youtu.be/RqlLjIg9ZSw', type: 'video' },
         { label: '📄 文章教學', url: 'https://lifecheatslab.com/n8n-wordpress-automation/', type: 'article' },
@@ -304,7 +311,7 @@ const LEVEL_2: Section = {
           required: true,
           links: [
             { label: 'Google Drive API', url: 'https://lifecheatslab.com/n8n-google-api/', type: 'article' },
-            { label: 'n8n API (教學在影片內)', url: 'https://youtu.be/GlT7NldtPEE', type: 'video' },
+            { label: 'n8n API (教學在影片內)', url: 'https://youtu.be/GlT7NldtPEE', type: 'article' },
           ],
         },
       ],
@@ -316,7 +323,7 @@ const LEVEL_2_RESOURCES: Level2Resource[] = [
   {
     icon: '📖',
     title: 'n8n 自學筆記 — 從入門到進階',
-    desc: '完整的 n8n 自學資源整理，包含官方文件、中文教學、本地部署影片等，適合想深入學習的你。',
+    desc: '我親自整理的 n8n 自學筆記，收錄我實際學習參考的教學影片，並按先後順序排列，讓你也能跟著自學。',
     url: 'https://lifecheatslab.com/n8n-aiagent/',
   },
   {
@@ -548,6 +555,8 @@ function renderMainContent(): void {
       <h1 class="brand-hero-title">n8n 新手實戰學習站</h1>
       <p class="brand-hero-subtitle">專為創業者、一人公司與中小企業主打造的<br><strong>n8n 自動化模板學習平台</strong></p>
       <p class="brand-hero-desc">
+        不論你是超級個體包用戶，還是免費模板的學習者，<br>
+        這裡都是你的起點。<br>
         免費學習、真實模板、一步步帶你踏入 AI 自動化的世界。
       </p>
     </div>
@@ -581,7 +590,7 @@ function renderMainContent(): void {
         <div class="steps-flow-title">📋 如何使用這個網站？</div>
         <a class="video-cta-btn pulse-glow" href="https://youtu.be/TO-I5Jht-5c" target="_blank" rel="noopener">
           <span class="video-cta-icon">▶️</span>
-          <span class="video-cta-text">觀看 2 分鐘使用指南</span>
+          <span class="video-cta-text">觀看本站使用指南</span>
         </a>
       </div>
       <div class="steps-container">
@@ -616,16 +625,16 @@ function renderMainContent(): void {
   html += `
     <div class="info-banner">
       <div class="info-text">
-        📢 本 n8n 學習網站皆可<strong>免費瀏覽與學習</strong>，但教學中所使用的模板為收費模板。<br>
-        若不想購買，所有模板也有提供<strong>免費版本</strong>，可在模板商城內下載。免費版本均具備核心功能，讓你自行研究。<br>
-        超級個體包收錄的實戰版本講求<strong>開箱即用</strong>，讓創業者和一人公司可以馬上使用，提升生產力、節省時間。
+        📢 本學習站所有教學內容皆可<strong>免費瀏覽與學習</strong>，歡迎所有對 n8n 有興趣的朋友！<br>
+        每個模板都有<strong>免費版本</strong>可在模板商城下載，具備核心功能，讓你跟著教學一起動手做。<br>
+        想要更完整的體驗？<strong>超級個體包</strong>收錄的實戰版本開箱即用、功能更豐富，還附帶專屬學習社群支援。
       </div>
       <div class="info-links">
-        <a class="info-link purchase" href="https://lifecheatslab.com/Supern8n" target="_blank" rel="noopener">🛒 購買超級個體包</a>
+        <a class="info-link purchase" href="https://lifecheatslab.com/Supern8n" target="_blank" rel="noopener">🛒 購買超級個體包（實戰版 + 社群）</a>
+        <a class="info-link" href="https://portaly.cc/darks" target="_blank" rel="noopener">🏪 Portaly 模板商城（含免費版）</a>
         <a class="info-link" href="https://www.facebook.com/chenshaoyun0603/" target="_blank" rel="noopener">📘 Facebook</a>
         <a class="info-link" href="https://www.threads.com/@darks0603" target="_blank" rel="noopener">🧵 Threads</a>
         <a class="info-link" href="https://www.youtube.com/@darkschen" target="_blank" rel="noopener">▶️ YouTube</a>
-        <a class="info-link" href="https://portaly.cc/darks" target="_blank" rel="noopener">🏪 Portaly 模板商城</a>
       </div>
     </div>
   `;
@@ -683,6 +692,40 @@ function renderMainContent(): void {
             <a class="resource-link video" href="https://www.youtube.com/watch?v=12NVY0Wl0Fw" target="_blank" rel="noopener">📺 效果展示</a>
           </div>
         </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+          <a href="https://lifecheatslab.com/Supern8n" target="_blank" rel="noopener" class="cta-btn primary pulsate block" style="max-width: 400px; margin: 0 auto; font-size: 1.05rem; padding: 14px 24px; display: inline-flex; justify-content: center;">
+            <span>🚀 立即獲得五大核心實戰模板</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="product-plans-section mt-divider">
+        <h3>🏆 兩種購買方案</h3>
+        <p class="plans-desc">超級個體包目前提供兩種版本，根據你的需求選擇：</p>
+        <div class="product-plans">
+          <div class="plan-card recommended">
+            <div class="plan-badge">⭐ 推薦</div>
+            <h5>超級個體包（含社群）</h5>
+            <ul>
+              <li>✅ 五大核心實戰模板</li>
+              <li>✅ 加入 <strong>n8n 實戰營 LINE 群組</strong>與 <strong>Discord 討論區</strong></li>
+              <li>✅ 內有 <strong>400+</strong> 位 AI 自動化實踐者</li>
+              <li>✅ 熱心助教解答問題，助理回答不了的由我解答</li>
+              <li>⚡ 入群會籍保留至：<strong>2026/12/31</strong></li>
+            </ul>
+            <p class="plan-note">💡 建議把握今年的時間，盡快把 n8n 學起來！明年會籍尚未確定，把握現在的機會。</p>
+          </div>
+          <div class="plan-card">
+            <h5>純模板包（不含社群）</h5>
+            <ul>
+              <li>✅ 五大核心實戰模板</li>
+              <li>❌ 不包含社群入場資格</li>
+              <li>❌ 無法發問或尋求協助</li>
+            </ul>
+            <p class="plan-note">適合有經驗、能自學的用戶</p>
+          </div>
+        </div>
       </div>
 
       <div class="product-extras">
@@ -695,22 +738,12 @@ function renderMainContent(): void {
             <li><strong>設計原理</strong>：盡可能用免費資源，讓大家能用低成本的方式先入門學習，再根據自己喜好與預算調整。</li>
           </ul>
         </div>
-        <div class="product-extra-card highlight">
-          <h4>🚨 社群權益重大通知</h4>
-          <p>購買「超級個體包」目前仍包含 <strong>n8n 實戰營 LINE 群組</strong>與 <strong>Discord 討論區</strong>的加入資格。</p>
-          <ul>
-            <li>⚡ 入群資格保留至：<strong>2026/12/31</strong></li>
-            <li>內有 <strong>400+</strong> 位 AI 自動化實踐者</li>
-            <li>有熱心助理會回答大家問題，小白也歡迎，助理回答不上來我會回答</li>
-            <li>注意：年後調漲時，此群組將轉為「訂閱制」經營，現在是最後以「買斷制」獲得近一年入場券的機會</li>
-          </ul>
-        </div>
         <div class="product-extra-card">
           <h4>🎁 目前購入限定贈品</h4>
           <ul>
             <li>🛡️ <strong>Notion 自動備份流</strong> — 確保你的心血不會因意外消失</li>
             <li>📩 <strong>LINE/Telegram 通知流</strong> — 將 n8n 的任何動靜即時傳送到你的手機</li>
-            <li>📝 <strong>Notion 專屬主控台模板</strong> — 與 n8n 完美對接的 Notion Dashboard</li>
+            <li>📝 <strong>Notion 專屬主控台模板</strong> — 管理你的社群、網站排程發文的中心控制台</li>
           </ul>
           <p style="margin-top: 10px; font-size: 0.82rem; color: var(--text-muted);">選購有疑問都歡迎<a href="https://www.facebook.com/chenshaoyun0603/" target="_blank" rel="noopener">私訊我 FB</a>。</p>
         </div>
@@ -739,6 +772,9 @@ function renderMainContent(): void {
       const subtitleHtml = task.subtitle
         ? `<div class="task-subtitle">${task.subtitle}</div>`
         : '';
+      const paidExtraHtml = task.paidExtra
+        ? `<div class="task-paid-extra"><span class="paid-extra-badge">✨ 超級個體包</span>${task.paidExtra}</div>`
+        : '';
 
       html += `
         <div class="task-card ${done ? 'completed' : ''}" data-task-id="${task.id}">
@@ -748,6 +784,7 @@ function renderMainContent(): void {
           </div>
           ${subtitleHtml}
           <div class="task-desc">${task.description}</div>
+          ${paidExtraHtml}
           ${linksHtml}
           ${apiHtml}
         </div>
@@ -778,12 +815,19 @@ function renderMainContent(): void {
     <div class="footer-cta-area">
 
       <div class="cta-card community">
-        <h3>🙋 自學有困難？加入專屬社群一起討論</h3>
-        <p>學習過程中遇到問題，可以加入我們的 n8n 實戰營專屬群組，裡面有 400+ 位學員和熱心助理可以幫忙解答。</p>
+        <h3>🙋 遇到問題？加入 400+ 人的專屬社群</h3>
+        <p>自學遇到卡關是很正常的事。購買超級個體包即可加入 <strong>n8n 實戰營 LINE 群組</strong>與 <strong>Discord 討論區</strong>，裡面有 400+ 位 AI 自動化實踐者與熱心助教協助你排除問題。</p>
+        <p class="community-highlight">💬 新手問題也歡迎 · 助教回答不了的由我親自回覆</p>
         <div class="cta-actions">
-          <a class="cta-btn primary" href="https://lifecheatslab.com/Supern8n" target="_blank" rel="noopener">🛒 還沒購買？前往購買超級個體包</a>
+          <a class="cta-btn primary" href="https://lifecheatslab.com/Supern8n" target="_blank" rel="noopener">🛒 購買超級個體包（含社群入場券）</a>
           <a class="cta-btn secondary" href="https://youtu.be/9kEOO1ouTtU" target="_blank" rel="noopener">📺 已購買？看影片了解如何加入群組</a>
         </div>
+      </div>
+
+      <div class="cta-card free-entry">
+        <h3>🆓 還沒準備好購買？免費版一樣能起步</h3>
+        <p>所有五大模板都有提供<strong>免費核心功能版</strong>，具備基礎功能，讓你跟著教學先動手做、感受自動化的威力。準備好了再考慮升級，完全沒壓力。</p>
+        <a class="cta-btn secondary" href="https://portaly.cc/darks" target="_blank" rel="noopener">🏪 前往 Portaly 商城下載免費模板</a>
       </div>
 
       <div class="cta-card newsletter">
