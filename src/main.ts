@@ -336,6 +336,7 @@ const SECTIONS: Section[] = [LEVEL_0, LEVEL_1, LEVEL_2];
 const STORAGE_PROGRESS = 'antigravity-sp-progress';
 const STORAGE_THEME = 'antigravity-sp-theme';
 const STORAGE_TIMER = 'antigravity-sp-timer';
+const STORAGE_INTRO_WATCHED = 'antigravity-sp-intro-watched';
 
 function loadProgress(): Set<string> {
   try {
@@ -576,7 +577,13 @@ function renderMainContent(): void {
   // ========== Steps Flow ==========
   html += `
     <div class="steps-flow">
-      <div class="steps-flow-title">📋 如何使用這個網站？</div>
+      <div class="steps-flow-header">
+        <div class="steps-flow-title">📋 如何使用這個網站？</div>
+        <a class="video-cta-btn pulse-glow" href="https://youtu.be/TO-I5Jht-5c" target="_blank" rel="noopener">
+          <span class="video-cta-icon">▶️</span>
+          <span class="video-cta-text">觀看 2 分鐘使用指南</span>
+        </a>
+      </div>
       <div class="steps-container">
         <div class="step-item">
           <div class="step-number">1</div>
@@ -833,6 +840,72 @@ function setupMobileSidebar(): void {
 }
 
 // ============================================
+// First-Visit Intro Modal
+// ============================================
+
+function isFirstVisit(): boolean {
+  const watched = localStorage.getItem(STORAGE_INTRO_WATCHED);
+  if (watched) return false;
+  const timer = localStorage.getItem(STORAGE_TIMER);
+  if (timer && parseInt(timer, 10) > 0) return false;
+  return true;
+}
+
+function showIntroModal(): void {
+  const backdrop = document.createElement('div');
+  backdrop.className = 'intro-modal-backdrop';
+
+  backdrop.innerHTML = `
+    <div class="intro-modal-card">
+      <div class="intro-modal-header">
+        <span class="intro-modal-emoji">👋</span>
+        <h2>歡迎來到學習站！</h2>
+        <p>第一次來嗎？花 2 分鐘看完這支使用指南，幫你快速上手整個網站的操作流程。</p>
+      </div>
+      <div class="intro-modal-video">
+        <iframe
+          src="https://www.youtube.com/embed/TO-I5Jht-5c?rel=0&modestbranding=1"
+          title="使用說明影片"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <div class="intro-modal-actions">
+        <button class="intro-modal-btn primary" id="intro-watch-btn">✅ 我看完了，開始學習！</button>
+        <button class="intro-modal-btn secondary" id="intro-skip-btn">先跳過，之後再看</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(backdrop);
+
+  // 動畫進場
+  requestAnimationFrame(() => {
+    backdrop.classList.add('visible');
+  });
+
+  const close = () => {
+    localStorage.setItem(STORAGE_INTRO_WATCHED, '1');
+    backdrop.classList.remove('visible');
+    setTimeout(() => backdrop.remove(), 300);
+  };
+
+  backdrop.querySelector('#intro-watch-btn')?.addEventListener('click', close);
+  backdrop.querySelector('#intro-skip-btn')?.addEventListener('click', close);
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) close();
+  });
+}
+
+function checkFirstVisit(): void {
+  if (isFirstVisit()) {
+    // 延遲 800ms 讓頁面先渲染完
+    setTimeout(showIntroModal, 800);
+  }
+}
+
+// ============================================
 // Init
 // ============================================
 
@@ -844,6 +917,7 @@ function init(): void {
   renderMainContent();
   updateProgressUI();
   setupMobileSidebar();
+  checkFirstVisit();
 }
 
 document.addEventListener('DOMContentLoaded', init);
