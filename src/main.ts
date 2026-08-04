@@ -570,19 +570,7 @@ function renderMainContent(): void {
   const app = document.getElementById('app')!;
   let html = '';
 
-  // ========== Top Announcement Banner ==========
-  html += `
-    <div class="top-announcement-banner" style="background: linear-gradient(135deg, #f0c040 0%, #a26cff 100%); color: white; padding: 12px 20px; text-align: center; font-weight: bold; border-radius: 8px; margin-bottom: 24px; box-shadow: 0 4px 15px rgba(162, 108, 255, 0.35); text-shadow: 0 1px 3px rgba(0,0,0,0.3);">
-      <a href="https://lifecheatslab.com/一週年活動" target="_blank" rel="noopener" style="color: white; text-decoration: none; display: block; line-height: 1.6;">
-        <span style="font-size: 1.1rem; vertical-align: middle;">🎉</span>
-        <span style="vertical-align: middle; margin-left: 4px;">
-          <strong>【Darks 創業一週年活動舉辦中】<br></strong>從無業遊民到年收百萬的 AI 顧問 —— 我自學 1,500 小時打磨的「超級個體包」<strong>限時 8 折！</strong><br>
-          🎁 限時至 2026/6/4 止，原價補票者再獨家獲贈多賺 10 萬的「Email 銷售工作流」！<br>👉 <strong>點此立即前往活動頁面查看詳情</strong>
-        </span>
-        <span style="font-size: 1.1rem; vertical-align: middle; margin-left: 4px;">🚀</span>
-      </a>
-    </div>
-  `;
+
 
   // ========== Brand Hero ==========
   html += `
