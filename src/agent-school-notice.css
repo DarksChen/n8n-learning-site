@@ -1,0 +1,163 @@
+/* Isolated announcement styles; the existing learning app and theme remain unchanged. */
+.agent-school-notice {
+  --school-copy: #dbeafe;
+  --school-accent: #93c5fd;
+  --school-line: #3b82f6;
+  --school-badge-bg: #1e3a5f;
+  --school-offer-bg: #422d12;
+  --school-offer-text: #fde68a;
+  padding: clamp(20px, 4vw, 32px);
+  margin-bottom: 32px;
+  border: 1px solid var(--school-line);
+  border-radius: 16px;
+  background: linear-gradient(120deg, #102644, #151c30);
+  color: #f8fafc;
+  box-shadow: 0 8px 28px rgba(37, 99, 235, 0.12);
+  overflow-wrap: anywhere;
+}
+
+[data-theme="light"] .agent-school-notice {
+  --school-copy: #334155;
+  --school-accent: #1d4ed8;
+  --school-line: #93c5fd;
+  --school-badge-bg: #dbeafe;
+  --school-offer-bg: #fef3c7;
+  --school-offer-text: #854d0e;
+  background: linear-gradient(120deg, #eff6ff, #f8fafc);
+  color: #0f172a;
+}
+
+.agent-school-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.agent-school-badge {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--school-badge-bg);
+  color: var(--school-accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.agent-school-badge-offer {
+  background: var(--school-offer-bg);
+  color: var(--school-offer-text);
+}
+
+.agent-school-eyebrow {
+  margin-bottom: 8px;
+  color: var(--school-accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.agent-school-notice h2 {
+  margin: 0 0 18px;
+  color: inherit;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+
+.agent-school-path {
+  display: grid;
+  gap: 8px;
+  color: var(--school-copy);
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.agent-school-path p,
+.agent-school-timing {
+  margin: 0;
+}
+
+.agent-school-path strong {
+  color: var(--school-accent);
+}
+
+.agent-school-timing {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--school-line);
+  color: var(--school-copy);
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+
+.agent-school-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  margin-top: 20px;
+}
+
+.agent-school-cta,
+.agent-school-continue {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.agent-school-cta {
+  padding: 12px 20px;
+  background: #1d4ed8;
+  color: #ffffff;
+}
+
+.agent-school-cta:hover {
+  background: #1e40af;
+  color: #ffffff;
+}
+
+.agent-school-continue {
+  padding: 10px 4px;
+  color: var(--school-copy);
+}
+
+.agent-school-continue:hover {
+  color: var(--school-accent);
+  text-decoration: underline;
+}
+
+.agent-school-notice a:focus-visible {
+  outline: 3px solid var(--school-accent);
+  outline-offset: 4px;
+}
+
+.agent-school-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 540px) {
+  .agent-school-actions {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .agent-school-cta,
+  .agent-school-continue {
+    width: 100%;
+  }
+}
