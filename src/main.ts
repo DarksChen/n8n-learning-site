@@ -1,5 +1,6 @@
 import './style.css';
 import { setupAgentSchoolOffer } from './agent-school-offer';
+import MEMBERS_DATA from './members-data.json';
 
 // ============================================
 // Types
@@ -212,7 +213,7 @@ Zeabur 已宣布 2026/12/31 停止營運（12/1 起陸續關閉），所以我�
       description: '⚠️ 如果你發現教學影片裡的 n8n 連線顏色跟你的不一樣，不用緊張！那是因為我裝了這個我自己開發的免費 Chrome 外掛。它只是美化用的，完全不影響功能，不裝也沒任何問題。',
       videoDuration: '0:37',
       links: [
-        { label: '✨ Chrome 外掛下載', url: 'https://lifecheatslab.com/style', type: 'tool' },
+        { label: '✨ Chrome 外掛下載', url: 'https://portaly.cc/darks/product/WKVU8jYfHiI8ZqTmmJKt', type: 'tool' },
         { label: '📺 展示影片', url: 'https://youtu.be/Zh10_3DjQj8', type: 'video' },
       ],
     },
@@ -238,7 +239,7 @@ const LEVEL_1: Section = {
       paidExtra: '實戰版特色：多種解析資料源，和最重要的讓 AI 的重點解析更貼合你的目標與需求！',
       videoDuration: '22:07',
       links: [
-        { label: '📺 影片教學', url: 'https://lifecheatslab.com/summary', type: 'video' },
+        { label: '📺 影片教學', url: 'https://youtu.be/kpvtk_9NjNo', type: 'video' },
         { label: '📄 文章教學', url: 'https://lifecheatslab.com/n8n-line-ai-notion/', type: 'article' },
       ],
       apiGroups: [
@@ -270,7 +271,7 @@ const LEVEL_1: Section = {
       paidExtra: '實戰版特色：能生成新聞圖片和錄音，讓你也能做 Podcast，用聽的吸收每日新知！',
       videoDuration: '19:52',
       links: [
-        { label: '📺 影片教學', url: 'https://lifecheatslab.com/news', type: 'video' },
+        { label: '📺 影片教學', url: 'https://youtu.be/7VpsPoYZYY8', type: 'video' },
         { label: '📄 文章教學', url: 'https://lifecheatslab.com/n8n-news-media/', type: 'article' },
       ],
       apiGroups: [
@@ -333,7 +334,7 @@ const LEVEL_1: Section = {
       videoDuration: '8:29',
       links: [
         { label: '📺 影片教學', url: 'https://youtu.be/f7072xeSCJw', type: 'video' },
-        { label: '📄 文章教學', url: 'https://lifecheatslab.com/post', type: 'article' },
+        { label: '📄 文章教學', url: 'https://lifecheatslab.com/n8n-social-media-template/', type: 'article' },
       ],
       apiGroups: [
         {
@@ -1059,7 +1060,7 @@ function renderMainContent(): void {
       <div class="cta-card newsletter">
         <h3>📨 訂閱電子報，掌握最新動態</h3>
         <p>訂閱後只在有新商品、新服務、新課程時才會寄信通知，平常不會寄信打擾你。</p>
-        <a class="cta-btn primary" href="https://lifecheatslab.com/follow" target="_blank" rel="noopener">✉️ 訂閱電子報</a>
+        <a class="cta-btn primary" href="https://lifecheatslab.com/#agent-school-title" target="_blank" rel="noopener">✉️ 訂閱電子報</a>
       </div>
 
       <div class="cta-card open-source">
@@ -1144,41 +1145,15 @@ function setupMobileSidebar(): void {
 // Outstanding Members (傑出成員)
 // ============================================
 
-const MEMBERS_WEBHOOK = 'https://aiagent.lifecheatslab.com/webhook/f62d64b4-0c5f-4363-9b47-5c25c6bd1100';
-const MEMBERS_CACHE_KEY = 'n8n_members_cache';
-const MEMBERS_CACHE_TIME_KEY = 'n8n_members_cache_time';
-const CACHE_DURATION_MS = 24 * 60 * 60 * 1000; // 24小時的毫秒數
-
-function parseMembersResponse(json: unknown): MemberData[] {
-  // webhook 回傳可能是 {data: [...]} 或 [{data: [...]}]
-  // 統一轉為陣列處理
-  const members: MemberData[] = [];
-  try {
-    let outerArr: { data: { data: MemberData[] }[] }[];
-    if (Array.isArray(json)) {
-      outerArr = json;
-    } else if (json && typeof json === 'object' && 'data' in json) {
-      outerArr = [json as { data: { data: MemberData[] }[] }];
-    } else {
-      return members;
-    }
-    for (const outer of outerArr) {
-      if (!outer.data) continue;
-      for (const inner of outer.data) {
-        if (!inner.data) continue;
-        for (const member of inner.data) {
-          // 如果 webhook 尚未提供綜合回答欄位，則自動計算（回答 + 分享自身經驗）
-          if (member['綜合回答'] === undefined) {
-            member['綜合回答'] = (member['回答'] || 0) + (member['分享自身經驗'] || 0);
-          }
-          members.push(member);
-        }
-      }
-    }
-  } catch { /* 解析失敗，回傳空 */ }
+// 名單已定案，直接內建（原本由 n8n Webhook 提供，2026-10-18 起寫死）
+function loadMembers(): MemberData[] {
+  const members = (MEMBERS_DATA as MemberData[]).map(m => ({
+    ...m,
+    // 沒有綜合回答欄位時，以「回答 + 分享自身經驗」計算
+    '綜合回答': m['綜合回答'] ?? (m['回答'] || 0) + (m['分享自身經驗'] || 0),
+  }));
   // 依「綜合回答」降序排列
-  members.sort((a, b) => (b['綜合回答'] || 0) - (a['綜合回答'] || 0));
-  return members;
+  return members.sort((a, b) => (b['綜合回答'] || 0) - (a['綜合回答'] || 0));
 }
 
 function getRoleTags(identity: string): { label: string; cls: string }[] {
@@ -1382,7 +1357,7 @@ function renderMembersPanel(members: MemberData[]): void {
     <div class="members-match-banner" style="background: rgba(255,255,255,0.05); padding: 16px; margin: 16px 14px 6px; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
       <div style="font-size: 0.95rem; margin-bottom: 8px; color: var(--text-color); font-weight: bold;">有 n8n 或 AI 自動化相關需求？</div>
       <div style="font-size: 0.85rem; margin-bottom: 12px; color: #a1a1aa;">如果以下的夥伴沒適合你的，能在這留下你的需求。</div>
-      <a href="https://lifecheatslab.com/n8n-expert" target="_blank" rel="noopener" style="display: block; background: #FF6B6B; color: white; padding: 10px 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(255,107,107,0.3);">
+      <a href="https://lifecheatslab.com/合作洽談_定製委託" target="_blank" rel="noopener" style="display: block; background: #FF6B6B; color: white; padding: 10px 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(255,107,107,0.3);">
         🤝 免費媒合專家協助
       </a>
     </div>
@@ -1439,76 +1414,13 @@ function setupMembersToggle(): void {
   });
 }
 
-async function fetchAndRenderMembers(): Promise<void> {
-  try {
-    const now = Date.now();
-    const cachedTimeStr = localStorage.getItem(MEMBERS_CACHE_TIME_KEY);
-    const cachedDataStr = localStorage.getItem(MEMBERS_CACHE_KEY);
-
-    let members: MemberData[] = [];
-
-    // 檢查是否有快取且是否在 24 小時內
-    if (cachedTimeStr && cachedDataStr) {
-      const cachedTime = parseInt(cachedTimeStr, 10);
-      if (now - cachedTime < CACHE_DURATION_MS) {
-        try {
-          members = JSON.parse(cachedDataStr);
-        } catch (e) {
-          console.error("快取解析失敗:", e);
-        }
-      }
-    }
-
-    // 若無有效快取，則呼叫 Webhook
-    if (members.length === 0) {
-      // 嘗試主要 Webhook
-      try {
-        const res = await fetch(MEMBERS_WEBHOOK, {
-          method: 'GET',
-          headers: { 'Accept': 'application/json' },
-        });
-        if (res.ok) {
-          const json = await res.json();
-          members = parseMembersResponse(json);
-        }
-      } catch (err) {
-        console.warn("主要 Webhook 讀取失敗（可能為 CORS 阻擋或無回應）", err);
-      }
-
-      // 備援 Webhook
-      if (members.length === 0) {
-        try {
-          const fallbackUrl = 'https://darksnewn8n.zeabur.app/webhook/f62d64b4-0c5f-4363-9b47-5c25c6bd1100';
-          const resFallback = await fetch(fallbackUrl, {
-            method: 'GET',
-            headers: { 'Accept': 'application/json' },
-          });
-          if (resFallback.ok) {
-            const jsonFallback = await resFallback.json();
-            members = parseMembersResponse(jsonFallback);
-          }
-        } catch (err) {
-          console.warn("備援 Webhook 也讀取失敗", err);
-        }
-      }
-
-      // 若有成功解出資料，則更新快取
-      if (members.length > 0) {
-        localStorage.setItem(MEMBERS_CACHE_KEY, JSON.stringify(members));
-        localStorage.setItem(MEMBERS_CACHE_TIME_KEY, now.toString());
-      } else {
-        console.warn("Webhook 回傳的資料為空，或解析結果長度為 0");
-      }
-    }
-
-    if (members.length === 0) return;
-    renderMembersPanel(members);
-    setupMembersToggle();
-    const mobileToggle = document.getElementById('members-mobile-toggle');
-    if (mobileToggle) mobileToggle.style.display = '';
-  } catch (err) {
-    console.error("fetchAndRenderMembers 執行時發生錯誤:", err);
-  }
+function renderMembers(): void {
+  const members = loadMembers();
+  if (members.length === 0) return;
+  renderMembersPanel(members);
+  setupMembersToggle();
+  const mobileToggle = document.getElementById('members-mobile-toggle');
+  if (mobileToggle) mobileToggle.style.display = '';
 }
 
 // ============================================
@@ -1590,7 +1502,7 @@ function init(): void {
   updateProgressUI();
   setupMobileSidebar();
   checkFirstVisit();
-  fetchAndRenderMembers();
+  renderMembers();
   setupAgentSchoolOffer();
 }
 
