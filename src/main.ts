@@ -157,6 +157,7 @@ Zeabur 已宣布 2026/12/31 停止營運（12/1 起陸續關閉），所以我�
         { label: '📄 Hostinger 官方：n8n VPS 範本教學', url: 'https://www.hostinger.com/support/10473267-how-to-use-the-n8n-vps-template-at-hostinger/', type: 'article' },
         { label: '📄 Hostinger 官方：n8n 搬遷教學', url: 'https://www.hostinger.com/support/how-to-migrate-n8n-workflows-between-hostinger-vps-instances/', type: 'article' },
         { label: '🌐 Hostinger VPS 方案', url: 'https://www.hostinger.com/vps-hosting', type: 'tool' },
+        { label: '🎁 Roy 的 Hostinger 推薦連結', url: 'https://www.hostinger.com?REFERRALCODE=PCWSINZEREIT', type: 'community' },
       ],
       copyPrompts: [
         {
@@ -1058,9 +1059,9 @@ function renderMainContent(): void {
       </div>
 
       <div class="cta-card newsletter">
-        <h3>📨 訂閱電子報，掌握最新動態</h3>
-        <p>訂閱後只在有新商品、新服務、新課程時才會寄信通知，平常不會寄信打擾你。</p>
-        <a class="cta-btn primary" href="https://lifecheatslab.com/#agent-school-title" target="_blank" rel="noopener">✉️ 訂閱電子報</a>
+        <h3>📨 對開發自己的 AI Agent 有興趣？訂閱電子報</h3>
+        <p>我持續在鑽研開發自己的 AI Agent，有新的進展或收穫，會透過電子報分享給你。不定期寄送、不洗信箱，隨時可以退訂。</p>
+        <a class="cta-btn primary" href="https://lifecheatslab.com/#agent-school-title" target="_blank" rel="noopener">✉️ 前往訂閱電子報</a>
       </div>
 
       <div class="cta-card open-source">
