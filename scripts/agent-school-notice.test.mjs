@@ -22,7 +22,17 @@ test('free practice and paid progression are clearly distinguished', () => {
   assert.match(notice, /付費進階[\s\S]*?打穩基礎、持續擴充功能，以獨立開發為目標/);
   assert.match(notice, /課程內容陸續更新/);
   assert.match(notice, /2026 年 11 月前/);
-  assert.match(notice, /早期優惠價/);
+  assert.match(notice, /id="agent-school-offer-badge"[^>]*>早鳥優惠中</);
+  assert.match(notice, /id="agent-school-offer"[^>]*>現在購買享<strong>早鳥優惠價<\/strong>/);
+});
+
+test('offer phases switch on Taiwan time: super early bird countdown, early bird, final countdown', () => {
+  const offer = read('src/agent-school-offer.ts');
+  assert.match(offer, /T00:00:00\+08:00/);
+  assert.match(offer, /tw\('2026-10-19'\), badge: '超早鳥優惠中'.*countdown: true/);
+  assert.match(offer, /tw\('2026-10-30'\), badge: '早鳥優惠中'.*10\/30 恢復原價.*countdown: false/);
+  assert.match(offer, /tw\('2026-11-02'\), badge: '早鳥優惠中'.*11\/2 00:00 恢復原價.*countdown: true/);
+  assert.match(read('src/main.ts'), /setupAgentSchoolOffer\(\);/);
 });
 
 test('the new school has a safe external link and the learning app remains reachable', () => {

@@ -90,6 +90,23 @@
   line-height: 1.8;
 }
 
+.agent-school-offer {
+  margin: 6px 0 0;
+  color: var(--school-copy);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.agent-school-countdown {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 6px;
+  background: var(--school-offer-bg);
+  color: var(--school-offer-text);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
 .agent-school-actions {
   display: flex;
   flex-wrap: wrap;

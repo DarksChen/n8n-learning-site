@@ -840,6 +840,87 @@ a:hover {
   flex-shrink: 0;
 }
 
+.task-desc code {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--accent-glow);
+  font-size: 0.8rem;
+}
+
+/* Task Notice（重要公告） */
+.task-notice {
+  margin-left: 34px;
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(231, 76, 60, 0.4);
+  border-left: 4px solid var(--danger);
+  background: rgba(231, 76, 60, 0.08);
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.task-notice b {
+  color: var(--danger);
+}
+
+/* Price Table */
+.price-table {
+  width: 100%;
+  margin: 8px 0 12px;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.price-table th,
+.price-table td {
+  padding: 6px 10px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.price-table th {
+  background: var(--accent-glow);
+  color: var(--accent-light);
+  font-weight: 600;
+}
+
+/* Copy Prompt Buttons */
+.copy-prompt-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-left: 34px;
+  margin-top: 10px;
+}
+
+.copy-prompt-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent-light);
+  background: var(--accent-glow);
+  border: 1px solid var(--accent);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.copy-prompt-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.copy-prompt-btn.copied {
+  border-color: #00b894;
+  background: rgba(0, 184, 148, 0.15);
+  color: #00b894;
+}
+
 /* Resource Links */
 .resource-links {
   display: flex;
@@ -1111,6 +1192,10 @@ a:hover {
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 14px;
   margin-top: 10px;
+}
+
+.product-extras > :only-child {
+  grid-column: 1 / -1;
 }
 
 .product-extra-card {

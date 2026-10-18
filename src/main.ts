@@ -1,4 +1,5 @@
 import './style.css';
+import { setupAgentSchoolOffer } from './agent-school-offer';
 
 // ============================================
 // Types
@@ -16,14 +17,21 @@ interface ApiGroup {
   links: ResourceLink[];
 }
 
+interface CopyPrompt {
+  label: string;
+  text: string;
+}
+
 interface TaskItem {
   id: string;
   title: string;
   subtitle?: string;
+  notice?: string;
   description: string;
   paidExtra?: string;
   links?: ResourceLink[];
   apiGroups?: ApiGroup[];
+  copyPrompts?: CopyPrompt[];
   videoDuration?: string;
 }
 
@@ -71,8 +79,8 @@ const LEVEL_0: Section = {
   tasks: [
     {
       id: 'portaly-purchase',
-      title: 'Portaly 購買教學：如何購買商品與找回已購買的商品',
-      description: '第一次使用 Portaly 購買超級個體包？這支影片教你如何完成購買流程，以及未來如何找回你已經購買過的商品與下載檔案。',
+      title: 'Portaly 教學：如何取得免費模板與找回已購買的商品',
+      description: '超級個體包與實戰版模板已停售，但<b>五大模板的免費版仍可在 Portaly 下載</b>，取得流程可參考這支影片。已經買過的同學，也能用這支影片找回商品與下載檔案。',
       videoDuration: '4:23',
       links: [
         { label: '📺 觀看影片教學', url: 'https://youtu.be/L3x21UezXZY', type: 'video' },
@@ -80,12 +88,93 @@ const LEVEL_0: Section = {
     },
     {
       id: 'deploy-n8n',
-      title: '使用 Zeabur 部署你的 n8n 伺服器',
-      description: '跟著教學在 Zeabur 上部署你的 n8n 伺服器（部署只需幾分鐘）。<br>教學內為你解析<b>雲端與本地部署的差異</b>，並帶你了解<b>如何租用你的專屬伺服器</b>（熟練後再租更貴的雲服或搬到本地都行）。<br></br>⚠️ <b>注意：</b>目前 Zeabur 已不提供免費額度，運行伺服器最少需每月 $3~6 USD 起；若為講師級別或高負載需求，約每月 $6~12 USD 即非常夠用。<br><br>🎁 <b>專屬優惠：</b>結帳套用折扣碼 <code style="margin: 0 4px; padding: 2px 6px; background: rgba(0,0,0,0.1); border-radius: 4px; font-weight: bold;">darkschen0603</code>，各項目首次付費可享 <b>40% 折扣</b>！（適用於伺服器、訂閱及儲值 AI API，建議直接租用合適機型以最大化折扣優惠）',
+      title: '使用 Zeabur 部署你的 n8n 伺服器（⚠️ 2026/12/31 停止營運）',
+      notice: '🚨 <b>重要公告：Zeabur 將於 2026/12/31 停止營運</b><br>Zeabur 在 2026 年 8 月底與 10 月 14 日接連發生兩次資安事件，官方已宣布逐步結束平台：<br>・<b>12/1 起</b>：專用伺服器停止續費、依到期日陸續關閉；共享叢集的服務會被暫停（仍可手動恢復來備份資料）<br>・<b>12/31</b>：所有服務全面停止<br>👉 <b>目前不推薦再用 Zeabur 部署。</b>影片還是可以照看，裡面講的雲端／本地部署差異、租伺服器的觀念都通用；新平台怎麼挑，請看下一張卡片。<br>👉 <b>已經在 Zeabur 上跑 n8n 的同學</b>：請盡快備份（LEVEL 2 有 3 分鐘自動備份教學），並在 12/1 前完成搬家。',
+      description: '跟著教學了解 n8n 的部署流程（影片以 Zeabur 示範）。<br>教學內為你解析<b>雲端與本地部署的差異</b>，並帶你了解<b>如何租用你的專屬伺服器</b>。',
       videoDuration: '18:08',
       links: [
         { label: '📺 部署教學影片', url: 'https://youtu.be/0miP0RGx4uQ', type: 'video' },
-        { label: '🎁 Zeabur 邀請連結 (首次付費 +$5 USD)', url: 'https://zeabur.com/referral?referralCode=darkschen0603', type: 'community' },
+      ],
+    },
+    {
+      id: 'n8n-host-alternatives',
+      title: '🔍 Zeabur 之後 n8n 要架在哪？讓 AI 幫你挑平台',
+      description: '老實說，目前<b>沒有一家跟 Zeabur 一樣「點幾下就好」又便宜的平台</b>，而且大多都要付費。好消息是現在 AI 已經很好用：請你的 AI（ChatGPT、Claude、Gemini…）上網搜尋最新的平台與價格、照你的需求挑一家，再一步一步帶你部署。也可以把上面的部署影片連結一起給 AI 參考（能看 YouTube 的 AI，例如 Gemini，可以直接看影片）。<br><br><b>常見的選擇</b>（價格常變動，以官網結帳畫面為準）：<br>・<b>n8n 官方 Cloud</b>：最省事，完全不用管伺服器，月費相對高<br>・<b>Hostinger</b>：有 n8n 一鍵範本（VPS）和託管方案，陪跑課學員 Roy 已經用快一年，經驗見下一張卡片<br>・<b>Railway</b>：操作方式最像 Zeabur，月費加用量計費<br>・<b>Vultr 等雲端 VPS</b>：彈性大、按小時計費，適合熟 Linux 的人<br>・<b>自己的電腦（Docker）</b>：免費，但電腦要一直開著，外部服務要連進來（Webhook）得另外設定<br><br>💡 <b>想省事</b>：選 n8n 官方 Cloud 或 Hostinger 的 n8n 託管方案；<b>想省錢、願意學一點</b>：選 VPS。<br>按下面按鈕複製提示詞，貼給你的 AI 就能開始。',
+      links: [
+        { label: '🌐 n8n 官方 Cloud 方案', url: 'https://n8n.io/pricing/', type: 'tool' },
+        { label: '📄 n8n 官方備份與還原教學', url: 'https://docs.n8n.io/deploy/host-n8n/keep-n8n-running/backup-and-restore/', type: 'article' },
+      ],
+      copyPrompts: [
+        {
+          label: '📋 複製提示詞：請 AI 幫我挑平台',
+          text: `我想部署（或搬家）我的 n8n 自動化伺服器，請你當我的部署顧問。
+
+【背景】
+我是跟著「n8n 超級個體包學習站」學 n8n 的新手，原本的教學用 Zeabur 部署（教學影片：https://youtu.be/0miP0RGx4uQ）。
+Zeabur 已宣布 2026/12/31 停止營運（12/1 起陸續關閉），所以我需要換平台。
+
+【請你這樣幫我】
+1. 先問我幾個問題：預算、技術程度、大概跑幾個工作流、需不需要 Webhook、有沒有舊資料要搬。
+2. 上網搜尋「目前」可以部署 n8n 的平台（例如 n8n 官方 Cloud、Hostinger、Railway、Vultr、自己電腦用 Docker），整理成比較表：每月費用、難易度、要自己維護哪些事。
+3. 依我的回答推薦 1～2 個最適合的，說明理由。
+4. 我選好之後，參考該平台與 n8n 的官方文件，一步一步帶我完成部署，每一步等我回報結果再繼續。
+
+【規則】
+- 用簡單白話解釋，不要一次丟一大串指令。
+- 不要叫我把 API Key、密碼貼在對話裡。
+- 刪除、覆蓋、重灌之類的操作，先講清楚後果、等我確認才做。`,
+        },
+        {
+          label: '📋 複製提示詞：請 AI 帶我從 Zeabur 搬家',
+          text: `我的 n8n 目前架在 Zeabur，Zeabur 將於 2026/12/31 停止營運（12/1 起共享叢集的服務會被暫停、專用伺服器陸續關閉）。我要搬到新平台：［填入你選的平台］。
+
+請一步一步帶我搬家，順序如下：
+1. 先盤點：列出我要帶走的東西（工作流、Credentials 憑證、加密金鑰 N8N_ENCRYPTION_KEY、環境變數、Webhook 網址、資料庫），並告訴我在 Zeabur 哪裡找得到。
+2. 先備份：帶我匯出工作流 JSON，並確認憑證與加密金鑰也有保留（只匯出工作流，不會帶走憑證）。
+3. 再部署：在新平台架好 n8n，參考 n8n 官方文件：
+   - 備份與還原：https://docs.n8n.io/deploy/host-n8n/keep-n8n-running/backup-and-restore/
+   - 工作流匯出匯入：https://docs.n8n.io/build/manage-workflows/export-and-import/
+4. 最後測試：逐一確認工作流、API 授權（OAuth 通常要重新授權）、Webhook 網址都正常，再停用舊的。
+
+規則：用白話說明；不要叫我把 API Key 或密碼貼進對話；任何刪除或覆蓋前先等我確認。`,
+        },
+      ],
+    },
+    {
+      id: 'student-roy-hostinger',
+      title: '🧑‍🎓 陪跑課學員 Roy 經驗分享：用 Hostinger VPS 架 n8n 快一年',
+      subtitle: '本篇由陪跑課學員 Roy 撰寫，以下是重點整理（經驗與價格為 2026/10/17 當時）',
+      description: '<b>為什麼搬：</b>Roy 原本也用 Zeabur。後來 Podcast 自動化流程越跑越多，原方案效能不夠、Terminal 權限也受限，於是在資安事件之前就搬到 Hostinger VPS，到現在用了快一年，很順手。<br><br><b>他怎麼用：</b>方案是 KVM 2（2 vCPU／8 GB RAM／100 GB），同一台機器上跑 n8n、Podcast 系統、管理後台、個人網站和其他 Docker 服務。VPS 的好處是一台就能放很多服務，不用每個專案各租一台。<br><br><b>新手怎麼開始（5 步）：</b>① 註冊 Hostinger、選 VPS 規格與訂閱期間 ② 建立 VPS 時選「<b>Ubuntu 24.04 with n8n</b>」範本 ③ 照後台指示完成部署 ④ 開啟 n8n、建立管理者帳號 ⑤ 先用 Manual Trigger 跑個測試，再接 API 與 Webhook。<br>⚠️ 已經有資料的 VPS 不要直接重裝系統範本，會把資料清掉。<br><br><b>費用（2026/10/17 官網，兩年方案月均價）：</b>'
+        + '<table class="price-table"><thead><tr><th>方案</th><th>規格</th><th>首次優惠</th><th>續約</th></tr></thead><tbody>'
+        + '<tr><td>KVM 1</td><td>1 vCPU／4 GB／50 GB</td><td>US$6.49</td><td>US$11.99</td></tr>'
+        + '<tr><td>KVM 2 ⭐ Roy 使用中</td><td>2 vCPU／8 GB／100 GB</td><td>US$8.99</td><td>US$14.99</td></tr>'
+        + '<tr><td>KVM 4</td><td>4 vCPU／16 GB／200 GB</td><td>US$12.99</td><td>US$28.99</td></tr>'
+        + '<tr><td>KVM 8</td><td>8 vCPU／32 GB／400 GB</td><td>US$25.99</td><td>US$49.99</td></tr>'
+        + '</tbody></table>'
+        + '<b>要注意：</b><br>・月均價是<b>一次預付整段期間</b>換來的，不是每月只扣這個數；續約價會變高，實際以結帳畫面為準<br>・只跑少量簡單工作流可先評估 KVM 1；還想放網站、資料庫就考慮 KVM 2 以上，不夠再升級<br>・VPS 只是主機錢，呼叫 OpenAI／Claude／Gemini 等 AI 模型的 API 費用另計<br>・自由度高＝系統更新、備份、安全設定都要自己顧<br>・Hostinger 的「VPS」和「n8n 託管方案」是兩種產品：VPS 一台能放多個應用；託管方案比較省事，但想同時跑多個應用要另外買<br><br><b>Roy 的搬家心得：</b>工作流 JSON 匯出匯入很簡單，真正花時間的是 API Key、OAuth 授權、Credentials、Webhook 網址、環境變數要重新設定。他建議的順序是：<b>先備份 → 再找 AI 協助</b>（Claude Code、Codex 都能幫忙）<b>→ 對照官方文件 → 全部測過再正式切換</b>。<br>Roy 也提醒：這是他自己的使用經驗，不代表 Hostinger 一定最好，還是要看自己的預算、技術能力與需求來選。',
+      links: [
+        { label: '📄 Hostinger 官方：n8n VPS 範本教學', url: 'https://www.hostinger.com/support/10473267-how-to-use-the-n8n-vps-template-at-hostinger/', type: 'article' },
+        { label: '📄 Hostinger 官方：n8n 搬遷教學', url: 'https://www.hostinger.com/support/how-to-migrate-n8n-workflows-between-hostinger-vps-instances/', type: 'article' },
+        { label: '🌐 Hostinger VPS 方案', url: 'https://www.hostinger.com/vps-hosting', type: 'tool' },
+      ],
+      copyPrompts: [
+        {
+          label: '📋 複製提示詞：請 AI 帶我在 Hostinger 架 n8n',
+          text: `我想在 Hostinger VPS 上架設 n8n，我是新手，請一步一步帶我做。
+
+參考資料：
+- Hostinger 官方 n8n VPS 範本教學：https://www.hostinger.com/support/10473267-how-to-use-the-n8n-vps-template-at-hostinger/
+- Hostinger 官方 n8n 搬遷教學：https://www.hostinger.com/support/how-to-migrate-n8n-workflows-between-hostinger-vps-instances/
+- n8n 官方備份與還原：https://docs.n8n.io/deploy/host-n8n/keep-n8n-running/backup-and-restore/
+
+請你：
+1. 先問我要跑哪些東西（只有 n8n？還有網站、資料庫？）和預算，幫我判斷 KVM 1 還是 KVM 2 比較合適。
+2. 帶我建立 VPS，選「Ubuntu 24.04 with n8n」範本。
+3. 帶我開啟 n8n、建立管理者帳號，並確認 HTTPS、帳號安全、備份與更新怎麼設定。
+4. 如果我有舊的 n8n（例如 Zeabur）要搬過來，帶我搬工作流、憑證與加密金鑰，最後逐一測試 API 授權與 Webhook。
+
+規則：每一步等我回報結果再繼續；不要叫我把 API Key 或密碼貼進對話；重灌、刪除、覆蓋前先等我確認。`,
+        },
       ],
     },
     {
@@ -279,14 +368,14 @@ const LEVEL_1: Section = {
     {
       id: 'wordpress-ai-editor',
       title: 'WordPress 網站 AI 編輯',
-      subtitle: '只需要申請數個 API，不難，但你得先有自己的網站（可以用 Zeabur 架）',
+      subtitle: '只需要申請數個 API，不難，但你得先有自己的網站（架站影片以 Zeabur 示範，Zeabur 將於 2026/12/31 停運，請改用其他主機）',
       description: '讓 AI 幫你撰寫與發布 WordPress 文章，直接從 n8n 發布草稿到你的網站。模板內附 Notion 主控台模板連結，匯入工作流後即可在 n8n 內找到，詳細請見教學影片。',
       paidExtra: '實戰版特色：SEO 自動優化、精選圖片生成、Notion 主控台整合',
       videoDuration: '14:32',
       links: [
         { label: '📺 影片教學', url: 'https://youtu.be/RqlLjIg9ZSw', type: 'video' },
         { label: '📄 文章教學', url: 'https://lifecheatslab.com/n8n-wordpress-automation/', type: 'article' },
-        { label: '📺 Zeabur 架站影片', url: 'https://youtu.be/sGbLVk0r7bI', type: 'video' },
+        { label: '📺 Zeabur 架站影片（平台將停運，觀念可參考）', url: 'https://youtu.be/sGbLVk0r7bI', type: 'video' },
       ],
       apiGroups: [
         {
@@ -356,7 +445,74 @@ const LEVEL_2_RESOURCES: Level2Resource[] = [
   }
 ];
 
-const SECTIONS: Section[] = [LEVEL_0, LEVEL_1, LEVEL_2];
+// ============================================
+// Data: 番外篇 — 把學習站架在自己電腦
+// ============================================
+
+const SELF_HOST: Section = {
+  id: 'self-host',
+  level: '番外篇',
+  title: '把這個學習站架在自己電腦',
+  description: '這個學習站是<b>開源</b>的（MIT 授權），原始碼都放在 GitHub。跟著下面 4 步，就能把整個網站下載到自己電腦上打開，以後不用連到這個網址也能看教學內容、記錄進度。<br>⚠️ 教學影片放在 YouTube，看影片時仍需要網路。',
+  icon: '💻',
+  tasks: [
+    {
+      id: 'self-host-node',
+      title: '步驟 1：安裝 Node.js（只要裝一次）',
+      description: '到 Node.js 官網下載 <b>LTS 版本</b>，一路按「下一步」安裝即可。<br>裝完打開終端機（Windows 搜尋「PowerShell」；Mac 打開「終端機」），輸入 <code>node -v</code>，有出現版本號就代表成功。',
+      links: [
+        { label: '🌐 Node.js 官網', url: 'https://nodejs.org/', type: 'tool' },
+      ],
+    },
+    {
+      id: 'self-host-download',
+      title: '步驟 2：從 GitHub 下載網站原始碼',
+      description: '打開下面的 GitHub 專案頁，點綠色「<b>Code</b>」按鈕 →「<b>Download ZIP</b>」，下載後解壓縮到找得到的地方（例如桌面）。<br>會用 Git 的同學也可以用 <code>git clone https://github.com/DarksChen/n8n-learning-site.git</code>，之後網站有更新，進資料夾執行 <code>git pull</code> 就能拿到最新版。',
+      links: [
+        { label: '💻 GitHub 專案頁（原始碼）', url: 'https://github.com/DarksChen/n8n-learning-site', type: 'tool' },
+      ],
+    },
+    {
+      id: 'self-host-run',
+      title: '步驟 3：在自己電腦把網站跑起來',
+      description: '在解壓縮後的資料夾裡打開終端機（Windows：在資料夾空白處按右鍵 →「在終端機中開啟」；Mac：把資料夾拖到終端機視窗上，前面打 <code>cd </code> 再按 Enter），依序輸入：<br>① <code>npm install</code>（只有第一次需要，會下載網站要用的套件，這一步要連網）<br>② <code>npm run dev</code><br>看到 <code>http://localhost:5173/</code> 後，用瀏覽器打開它，學習站就出現在你的電腦上了！要關掉時在終端機按 <code>Ctrl + C</code>。<br>💡 以後想看，只要進資料夾再執行 <code>npm run dev</code> 就好。<br>💡 線上版打勾的進度存在瀏覽器裡，本機版會從頭記（兩邊分開）。',
+    },
+    {
+      id: 'self-host-ai',
+      title: '步驟 4：卡住了？讓 AI 一步一步帶你',
+      description: '不熟終端機也沒關係，複製下面的提示詞貼給你的 AI（ChatGPT、Claude、Gemini 都可以），它會依你的電腦帶你完成。會用 Claude Code、Codex 這類 AI 工具的同學，甚至可以直接讓它幫你下載、安裝、跑起來。<br>想改成自己的版本（換顏色、換內容、做成自己的學習站）也可以請 AI 幫忙，GitHub 專案頁的說明有教。',
+      copyPrompts: [
+        {
+          label: '📋 複製提示詞：請 AI 帶我把學習站架在自己電腦',
+          text: `請一步一步帶我把一個開源網站架在我自己的電腦上，讓我可以在本機打開它。
+
+網站原始碼：https://github.com/DarksChen/n8n-learning-site
+（這是用 Vite + TypeScript 做的靜態網站，用 npm install 安裝套件、npm run dev 啟動）
+
+我的電腦是：［Windows／Mac，請填］
+我的程度：新手，不太會用終端機
+
+請你：
+1. 先教我確認有沒有裝 Node.js，沒有的話教我安裝 LTS 版。
+2. 教我從 GitHub 下載原始碼（Download ZIP 或 git clone，挑對我最簡單的）。
+3. 教我在資料夾裡打開終端機，執行 npm install 和 npm run dev，再用瀏覽器打開它顯示的網址。
+4. 幫我做一個雙擊就能啟動的捷徑（Windows 用 .bat、Mac 用 .command），以後不用每次打指令。
+5. 每一步等我回報結果再繼續；遇到錯誤訊息，我貼給你，你再幫我判斷。`,
+        },
+      ],
+    },
+  ],
+};
+
+const SECTIONS: Section[] = [LEVEL_0, LEVEL_1, LEVEL_2, SELF_HOST];
+
+// 複製提示詞：以「taskId:序號」查表，避免把長文塞進 HTML 屬性
+const COPY_PROMPTS = new Map<string, string>();
+for (const section of SECTIONS) {
+  for (const task of section.tasks) {
+    task.copyPrompts?.forEach((p, i) => COPY_PROMPTS.set(`${task.id}:${i}`, p.text));
+  }
+}
 
 // ============================================
 // LocalStorage 管理
@@ -502,7 +658,7 @@ function renderSidebarNav(): void {
     </div>
     <div class="nav-item" data-section="" data-task-id="" data-scroll-to="product-intro">
       <span class="nav-check" style="border:none;">📦</span>
-      <span>超級個體包內容介紹</span>
+      <span>五大模板介紹</span>
     </div>
   `;
   for (const section of SECTIONS) {
@@ -717,12 +873,11 @@ function renderMainContent(): void {
     <div class="info-banner">
       <div class="info-text">
         📢 本學習站所有教學內容皆可<strong>免費瀏覽與學習</strong>，歡迎所有對 n8n 有興趣的朋友！<br>
-        每個模板都有<strong>免費版本</strong>可在模板商城下載，具備核心功能，讓你跟著教學一起動手做。<br>
-        想要更完整的體驗？<strong>超級個體包</strong>收錄的實戰版本開箱即用、功能更豐富，還附帶專屬學習社群支援。
+        ⚠️ <strong>超級個體包與實戰版模板目前已停售。</strong><br>
+        每個模板仍有<strong>免費版本</strong>可在 Portaly 下載，具備核心功能，讓你跟著教學一起動手做。
       </div>
       <div class="info-links">
-        <a class="info-link purchase" href="https://lifecheatslab.com/Supern8n" target="_blank" rel="noopener">🛒 購買超級個體包（實戰版 + 社群）</a>
-        <a class="info-link" href="https://portaly.cc/darks" target="_blank" rel="noopener">🏪 Portaly 模板商城（含免費版）</a>
+        <a class="info-link purchase" href="https://portaly.cc/darks" target="_blank" rel="noopener">🆓 下載免費模板（Portaly）</a>
         <a class="info-link" href="https://www.facebook.com/chenshaoyun0603/" target="_blank" rel="noopener">📘 Facebook</a>
         <a class="info-link" href="https://www.threads.com/@darks0603" target="_blank" rel="noopener">🧵 Threads</a>
         <a class="info-link" href="https://www.youtube.com/@darkschen" target="_blank" rel="noopener">▶️ YouTube</a>
@@ -742,10 +897,11 @@ function renderMainContent(): void {
   html += `
     <div class="product-intro" id="product-intro">
       <div class="product-intro-header">
-        <h2>📦 超級個體包內容介紹</h2>
-        <p class="product-intro-subtitle">最適合新手的第一個 n8n 模板組合包 — 給超級個體的你，n8n 自動化武器庫</p>
+        <h2>📦 五大模板介紹</h2>
+        <p class="product-intro-subtitle">最適合新手的第一個 n8n 模板組合 — 給超級個體的你，n8n 自動化武器庫</p>
+        <p class="product-intro-desc"><strong>📢 超級個體包與實戰版模板已停售，不再販售。</strong>五大模板都有免費版可以下載，跟著本站教學就能動手做。</p>
         <p class="product-intro-desc">你不只能使用，還能隨意修改，甚至未來自行開發時拿我已經做好的功能直接使用，能替你省下上百小時。<br>這些模板是我自己也會用，學員也經常使用，甚至拿來魔改、組合、拆解的真實可實戰使用的模板。</p>
-        <p class="product-intro-desc">這些模板不是天下無敵，我希望大家先使用，邊用邊學，進而修改成更適合自己使用的。就算不修改，哪怕只是堅持使用一兩個模板，也能帶來效益。<br>模板都有使用教學，希望讓小白也能輕鬆使用，購買後還能進專屬群，有問題能在裡面交流，新手問題也可以。</p>
+        <p class="product-intro-desc">這些模板不是天下無敵，我希望大家先使用，邊用邊學，進而修改成更適合自己使用的。就算不修改，哪怕只是堅持使用一兩個模板，也能帶來效益。<br>模板都有使用教學，希望讓小白也能輕鬆使用。</p>
       </div>
 
       <div class="product-templates">
@@ -785,37 +941,9 @@ function renderMainContent(): void {
         </div>
 
         <div style="text-align: center; margin-top: 30px;">
-          <a href="https://lifecheatslab.com/Supern8n" target="_blank" rel="noopener" class="cta-btn primary pulsate block" style="max-width: 400px; margin: 0 auto; font-size: 1.05rem; padding: 14px 24px; display: inline-flex; justify-content: center;">
-            <span>🚀 立即獲得五大核心實戰模板</span>
+          <a href="https://portaly.cc/darks" target="_blank" rel="noopener" class="cta-btn primary pulsate block" style="max-width: 400px; margin: 0 auto; font-size: 1.05rem; padding: 14px 24px; display: inline-flex; justify-content: center;">
+            <span>🆓 前往 Portaly 下載免費模板</span>
           </a>
-        </div>
-      </div>
-
-      <div class="product-plans-section mt-divider">
-        <h3>🏆 兩種購買方案</h3>
-        <p class="plans-desc">超級個體包目前提供兩種版本，根據你的需求選擇：</p>
-        <div class="product-plans">
-          <div class="plan-card recommended">
-            <div class="plan-badge">⭐ 推薦</div>
-            <h5>超級個體包（含社群）</h5>
-            <ul>
-              <li>✅ 五大核心實戰模板</li>
-              <li>✅ 加入 <strong>n8n 實戰營 LINE 群組</strong>與 <strong>Discord 討論區</strong></li>
-              <li>✅ 內有 <strong>660+</strong> 位 AI 自動化實踐者</li>
-              <li>✅ 熱心助教解答問題，助理回答不了的由我解答</li>
-              <li>⚡ 入群會籍保留至：<strong>2026/12/31</strong></li>
-            </ul>
-            <p class="plan-note">💡 建議把握今年的時間，盡快把 n8n 學起來！明年會籍尚未確定，把握現在的機會。</p>
-          </div>
-          <div class="plan-card">
-            <h5>純模板包（不含社群）</h5>
-            <ul>
-              <li>✅ 五大核心實戰模板</li>
-              <li>❌ 不包含社群入場資格</li>
-              <li>❌ 無法發問或尋求協助</li>
-            </ul>
-            <p class="plan-note">適合有經驗、能自學的用戶</p>
-          </div>
         </div>
       </div>
 
@@ -823,21 +951,11 @@ function renderMainContent(): void {
         <div class="product-extra-card">
           <h4>💡 運行模板產生的花費</h4>
           <ul>
-            <li><strong>n8n 部署費用</strong>：Zeabur 雲端部署伺服器每月最少需 3~6 美金起，講師級別至約 6~12 美金夠用。</li>
-            <li><strong>AI 費用</strong>：生圖功能需要付費 Gemini，可使用 Zeabur AI HUB功能生圖，1K 大小的圖 0.067 美金起，儲多少用多少，不怕刷爆。</li>
+            <li><strong>n8n 部署費用</strong>：雲端主機大多需要付費，依平台與規格不同，入門約每月數美金起（Zeabur 將於 2026/12/31 停止營運，怎麼挑新平台請見 LEVEL 0）。</li>
+            <li><strong>AI 費用</strong>：生圖功能需要付費 Gemini API，依用量計費（原本推薦的 Zeabur AI Hub 會隨 Zeabur 停運一起結束）。</li>
             <li><strong>爬蟲費用</strong>：模板使用的爬蟲均有免費額度，但量若極大則仍需自行付費。</li>
-            <li><strong>交易與台灣發票特別聲明</strong>：本商品由境外實體 <strong>FireGenesis LLC</strong> 提供，<strong>不會開立台灣發票</strong>。若您有開立「台灣發票」報帳需求，請直接前往 Portaly 官方商城以原價購買，但恕無法享有本活動的任何折扣與贈品。</li>
             <li><strong>設計原理</strong>：盡可能用免費資源，讓大家能用低成本的方式先入門學習，再根據自己喜好與預算調整。</li>
           </ul>
-        </div>
-        <div class="product-extra-card">
-          <h4>🎁 目前購入限定贈品</h4>
-          <ul>
-            <li>🛡️ <strong>Notion 自動備份流</strong> — 確保你的心血不會因意外消失</li>
-            <li>📩 <strong>LINE/Telegram 通知流</strong> — 將 n8n 的任何動靜即時傳送到你的手機</li>
-            <li>📝 <strong>Notion 專屬主控台模板</strong> — 管理你的社群、網站排程發文的中心控制台</li>
-          </ul>
-          <p style="margin-top: 10px; font-size: 0.82rem; color: var(--text-muted);">選購有疑問都歡迎<a href="https://www.facebook.com/chenshaoyun0603/" target="_blank" rel="noopener">私訊我 FB</a>。</p>
         </div>
       </div>
     </div>
@@ -865,7 +983,15 @@ function renderMainContent(): void {
         ? `<div class="task-subtitle">${task.subtitle}</div>`
         : '';
       const paidExtraHtml = task.paidExtra
-        ? `<div class="task-paid-extra"><span class="paid-extra-badge">✨ 超級個體包</span>${task.paidExtra}</div>`
+        ? `<div class="task-paid-extra"><span class="paid-extra-badge">✨ 實戰版（已停售）</span>${task.paidExtra}</div>`
+        : '';
+
+      const noticeHtml = task.notice
+        ? `<div class="task-notice">${task.notice}</div>`
+        : '';
+      const copyHtml = task.copyPrompts?.length
+        ? `<div class="copy-prompt-list">${task.copyPrompts.map((p, i) =>
+            `<button class="copy-prompt-btn" data-copy-id="${task.id}:${i}">${p.label}</button>`).join('')}</div>`
         : '';
 
       const durationHtml = task.videoDuration
@@ -882,10 +1008,12 @@ function renderMainContent(): void {
             </div>
           </div>
           ${subtitleHtml}
+          ${noticeHtml}
           <div class="task-desc">${task.description}</div>
           ${paidExtraHtml}
           ${linksHtml}
           ${apiHtml}
+          ${copyHtml}
         </div>
       `;
     }
@@ -914,19 +1042,18 @@ function renderMainContent(): void {
     <div class="footer-cta-area">
 
       <div class="cta-card community">
-        <h3>🙋 遇到問題？加入 660+ 人的專屬社群</h3>
-        <p>自學遇到卡關是很正常的事。購買超級個體包即可加入 <strong>n8n 實戰營 LINE 群組</strong>與 <strong>Discord 討論區</strong>，裡面有 660+ 位 AI 自動化實踐者與熱心助教協助你排除問題。</p>
+        <h3>🙋 已購買超級個體包的同學</h3>
+        <p>超級個體包已停售，不再開放新成員購買入群。已購買的同學，入群會籍保留至 <strong>2026/12/31</strong>，遇到問題可以在 <strong>n8n 實戰營 LINE 群組</strong>與 <strong>Discord 討論區</strong>發問，裡面有 660+ 位 AI 自動化實踐者與熱心助教。</p>
         <p class="community-highlight">💬 新手問題也歡迎 · 助教回答不了的由我親自回覆</p>
         <div class="cta-actions">
-          <a class="cta-btn primary" href="https://lifecheatslab.com/Supern8n" target="_blank" rel="noopener">🛒 購買超級個體包（含社群入場券）</a>
-          <a class="cta-btn secondary" href="https://youtu.be/9kEOO1ouTtU" target="_blank" rel="noopener">📺 已購買？看影片了解如何加入群組</a>
+          <a class="cta-btn secondary" href="https://youtu.be/9kEOO1ouTtU" target="_blank" rel="noopener">📺 看影片了解如何加入群組</a>
         </div>
       </div>
 
       <div class="cta-card free-entry">
-        <h3>🆓 還沒準備好購買？免費版一樣能起步</h3>
-        <p>所有五大模板都有提供<strong>免費核心功能版</strong>，具備基礎功能，讓你跟著教學先動手做、感受自動化的威力。準備好了再考慮升級，完全沒壓力。</p>
-        <a class="cta-btn secondary" href="https://portaly.cc/darks" target="_blank" rel="noopener">🏪 前往 Portaly 商城下載免費模板</a>
+        <h3>🆓 免費模板，一樣能起步</h3>
+        <p>所有五大模板都有提供<strong>免費核心功能版</strong>，具備基礎功能，讓你跟著教學動手做、感受自動化的威力。</p>
+        <a class="cta-btn primary" href="https://portaly.cc/darks" target="_blank" rel="noopener">🆓 前往 Portaly 下載免費模板</a>
       </div>
 
       <div class="cta-card newsletter">
@@ -939,13 +1066,17 @@ function renderMainContent(): void {
         <h3>📢 本網站為開源專案</h3>
         <p>這個學習站的源碼完全公開在 GitHub，採用 MIT 授權。你可以自由取用、修改、做成自己的學習站或個人網站。商用也沒問題！</p>
         <p>如果你喜歡這個專案，歡迎到 GitHub 給我一個 ⭐ Star，對我來說是很大的鼓勵！</p>
-        <a class="cta-btn primary" href="https://github.com/DarksChen/n8n-learning-site" target="_blank" rel="noopener">⭐ 前往 GitHub 給個 Star</a>
+        <p>想把整個學習站架在自己電腦、不用連到這個網址也能看？跟著「💻 番外篇」4 個步驟就能做到。</p>
+        <div class="cta-actions">
+          <a class="cta-btn primary" href="https://github.com/DarksChen/n8n-learning-site" target="_blank" rel="noopener">⭐ 前往 GitHub 給個 Star</a>
+          <a class="cta-btn secondary" href="#self-host">💻 教我架在自己電腦</a>
+        </div>
       </div>
 
       <div class="cta-card consulting">
         <h3>💼 委託開發・顧問諮詢・企業導入</h3>
-        <p>如果你需要客製化的 n8n 工作流開發、一對一技術顧問，或想為企業導入 AI 自動化，歡迎前往我的個人頁面了解更多。</p>
-        <a class="cta-btn primary" href="https://lifecheatslab.com/darks" target="_blank" rel="noopener">👉 前往了解更多</a>
+        <p>需要客製化的 n8n 工作流開發、一對一技術顧問，或想為企業導入 AI 自動化？可以<strong>預約付費諮詢</strong>，由我直接協助你；如果需求更適合其他人，也能<strong>幫你媒合合適的專家</strong>。</p>
+        <a class="cta-btn primary" href="https://lifecheatslab.com/合作洽談_定製委託" target="_blank" rel="noopener">📅 預約諮詢／媒合專家</a>
       </div>
 
     </div>
@@ -959,6 +1090,14 @@ function renderMainContent(): void {
       e.stopPropagation();
       const taskId = (cb as HTMLElement).getAttribute('data-task-id');
       if (taskId) toggleTask(taskId);
+    });
+  });
+
+  // 複製提示詞按鈕
+  app.querySelectorAll<HTMLButtonElement>('.copy-prompt-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = COPY_PROMPTS.get(btn.dataset.copyId ?? '');
+      if (text) copyWithFeedback(btn, text);
     });
   });
 
@@ -1147,6 +1286,66 @@ function renderMemberCard(member: MemberData, memberRank: number, index: number)
   `;
 }
 
+// 複製文字到剪貼簿，並在按鈕上顯示結果
+async function copyWithFeedback(btn: Element, textToCopy: string): Promise<void> {
+  const originalText = btn.innerHTML;
+  const setSuccess = () => {
+    btn.innerHTML = '✅ 已複製';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = originalText;
+      btn.classList.remove('copied');
+    }, 2000);
+  };
+
+  const setError = () => {
+    btn.innerHTML = '❌ 複製失敗';
+    setTimeout(() => {
+      btn.innerHTML = originalText;
+    }, 2000);
+  };
+
+  // 優先使用 navigator.clipboard
+  if (navigator.clipboard && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      setSuccess();
+      return;
+    } catch (err) {
+      console.error('Failed to copy text using clipboard API: ', err);
+      // Fallback below
+    }
+  }
+
+  // Fallback: 建立隱藏的 textarea 進行複製
+  try {
+    const textArea = document.createElement("textarea");
+    textArea.value = textToCopy;
+
+    // 避免滾動至最底端
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    const successful = document.execCommand('copy');
+    document.body.removeChild(textArea);
+
+    if (successful) {
+      setSuccess();
+    } else {
+      setError();
+    }
+  } catch (err) {
+    console.error('Fallback copy failed', err);
+    setError();
+  }
+}
+
 function escapeHtml(str: string): string {
   const div = document.createElement('div');
   div.textContent = str;
@@ -1207,66 +1406,9 @@ function renderMembersPanel(members: MemberData[]): void {
 
   // 複製按鈕事件
   panel.querySelectorAll('.member-copy-btn').forEach(btn => {
-    btn.addEventListener('click', async () => {
+    btn.addEventListener('click', () => {
       const textToCopy = btn.getAttribute('data-copy');
-      if (!textToCopy) return;
-
-      const originalText = btn.innerHTML;
-      const setSuccess = () => {
-        btn.innerHTML = '✅ 已複製';
-        btn.classList.add('copied');
-        setTimeout(() => {
-          btn.innerHTML = originalText;
-          btn.classList.remove('copied');
-        }, 2000);
-      };
-
-      const setError = () => {
-        btn.innerHTML = '❌ 複製失敗';
-        setTimeout(() => {
-          btn.innerHTML = originalText;
-        }, 2000);
-      };
-
-      // 優先使用 navigator.clipboard
-      if (navigator.clipboard && window.isSecureContext) {
-        try {
-          await navigator.clipboard.writeText(textToCopy);
-          setSuccess();
-          return;
-        } catch (err) {
-          console.error('Failed to copy text using clipboard API: ', err);
-          // Fallback below
-        }
-      }
-
-      // Fallback: 建立隱藏的 textarea 進行複製
-      try {
-        const textArea = document.createElement("textarea");
-        textArea.value = textToCopy;
-
-        // 避免滾動至最底端
-        textArea.style.top = "0";
-        textArea.style.left = "0";
-        textArea.style.position = "fixed";
-        textArea.style.opacity = "0";
-
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-
-        const successful = document.execCommand('copy');
-        document.body.removeChild(textArea);
-
-        if (successful) {
-          setSuccess();
-        } else {
-          setError();
-        }
-      } catch (err) {
-        console.error('Fallback copy failed', err);
-        setError();
-      }
+      if (textToCopy) copyWithFeedback(btn, textToCopy);
     });
   });
 
@@ -1449,6 +1591,7 @@ function init(): void {
   setupMobileSidebar();
   checkFirstVisit();
   fetchAndRenderMembers();
+  setupAgentSchoolOffer();
 }
 
 document.addEventListener('DOMContentLoaded', init);
